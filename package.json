@@ -1,7 +1,7 @@
 {
-  "name": "kc-cherian-memorial",
+  "name": "family-heritage",
   "version": "1.0.0",
-  "description": "Memorial website for Pastor K.C. Cherian, co-founder of the Indian Pentecostal Church of God",
+  "description": "Family heritage memorial sites",
   "scripts": {
     "start": "serve . -l $PORT"
   },
