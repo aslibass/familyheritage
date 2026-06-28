@@ -724,6 +724,47 @@ body.lightbox-open { overflow: hidden; }
   gap: 2.5rem 2rem;
 }
 
+/* Spread: caption page document left, photograph right — mirrors original booklet layout */
+.album-spread {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+  align-items: start;
+}
+@media (max-width: 680px) {
+  .album-spread {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Caption document scan — shown at natural aspect ratio, no forced crop */
+.album-caption-doc {
+  margin: 0;
+}
+.album-caption-doc img {
+  width: 100%;
+  display: block;
+  border-radius: 2px;
+  cursor: zoom-in;
+}
+/* Rotated caption pages use the same rotation treatment as photos */
+.album-caption-doc.rotated {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+}
+.album-caption-doc.rotated img {
+  position: absolute;
+  width: 133%;
+  height: 75%;
+  top: 12.5%;
+  left: -16.67%;
+  transform: rotate(-90deg);
+  object-fit: cover;
+  border-radius: 0;
+}
+
 .album-item {
   break-inside: avoid;
 }
