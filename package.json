@@ -1,0 +1,11 @@
+{
+  "name": "kc-cherian-memorial",
+  "version": "1.0.0",
+  "description": "Memorial website for Pastor K.C. Cherian, co-founder of the Indian Pentecostal Church of God",
+  "scripts": {
+    "start": "serve . -l $PORT"
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}
