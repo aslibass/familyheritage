@@ -37,6 +37,35 @@
 
     /* Gallery image cursor */
     .gallery-img { cursor: zoom-in; }
+
+    /* ALBUM — chapters of large plates with typed captions */
+    .album-index { display:flex; flex-wrap:wrap; gap:10px 14px; margin:0 0 clamp(20px,3vw,32px); }
+    .album-index a { font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8a4636; text-decoration:none; border:1px solid #d8c8a6; padding:8px 14px; transition:background 0.2s, color 0.2s; }
+    .album-index a:hover { background:#8a4636; color:#f4ece0; }
+
+    .chapter { scroll-margin-top:80px; padding-top:clamp(48px,7vw,88px); }
+    .chapter-head { border-top:2px solid #8a4636; padding-top:22px; margin-bottom:clamp(12px,2vw,20px); }
+    .chapter-num { font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:#9a8b6e; margin-bottom:10px; }
+    .chapter-title { font-family:'Cormorant Garamond', serif; font-weight:400; font-size:clamp(30px,4.5vw,52px); line-height:1; letter-spacing:-0.01em; margin:0 0 14px; }
+    .chapter-lede { font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:300; font-size:clamp(18px,2vw,24px); line-height:1.5; color:#6e6048; max-width:52ch; margin:0; }
+
+    /* a "plate": large photo + typed caption, alternating sides */
+    .plate { display:grid; grid-template-columns:1.5fr 1fr; gap:clamp(22px,4vw,58px); align-items:center; margin:clamp(40px,6vw,72px) 0; }
+    .plate:nth-of-type(even) .plate-photo { order:2; }
+    .plate-photo { margin:0; background:#fbf6ec; padding:14px; border:1px solid #e2d4b8; box-shadow:0 20px 40px -22px rgba(43,37,28,0.55); }
+    .plate-photo img { display:block; width:100%; height:auto; filter:saturate(0.96) contrast(1.02); }
+    .plate-caption { background:#faf4e8; border:1px solid #e7d9bd; padding:clamp(20px,2.6vw,32px); align-self:stretch; display:flex; flex-direction:column; justify-content:center; }
+    .plate-label { font-family:'Courier Prime', monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:#8a4636; margin-bottom:16px; }
+    .plate-typed { font-family:'Courier Prime', monospace; font-size:14px; line-height:1.95; color:#3a3124; }
+
+    /* frontispiece: cover + map */
+    .frontispiece { display:grid; grid-template-columns:1fr 1fr; gap:clamp(22px,4vw,52px); margin:clamp(30px,4vw,44px) 0 clamp(20px,3vw,28px); }
+
+    @media (max-width:760px) {
+      .plate { grid-template-columns:1fr; gap:16px; }
+      .plate:nth-of-type(even) .plate-photo { order:0; }
+      .frontispiece { grid-template-columns:1fr; }
+    }
   </style>
 </head>
 <body>
@@ -213,200 +242,274 @@
 
   <!-- GALLERY / ALBUM -->
   <section id="gallery" style="scroll-margin-top:64px; background:#f4ece0;">
-    <div style="max-width:1280px; margin:0 auto; padding:clamp(56px,8vw,110px) clamp(20px,5vw,64px);">
+    <div style="max-width:1200px; margin:0 auto; padding:clamp(56px,8vw,110px) clamp(20px,5vw,64px);">
 
-      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:clamp(30px,4vw,48px);">
-        <h2 style="font-family:'Cormorant Garamond', serif; font-weight:400; font-size:clamp(38px,5vw,60px); margin:0; letter-spacing:-0.01em;">04 &mdash; The Album</h2>
-        <p style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.1em; color:#9a8b6e; margin:0; max-width:36ch; line-height:1.6;"><em>Methodists in South East Asia</em>, c.&thinsp;1959&ndash;1961. Captions verbatim from the original typed pages.</p>
+      <div style="margin-bottom:clamp(20px,3vw,32px);">
+        <div style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.28em; text-transform:uppercase; color:#9a8b6e; margin-bottom:14px;">04 &mdash; The Album</div>
+        <h2 style="font-family:'Cormorant Garamond', serif; font-weight:400; font-size:clamp(40px,5.5vw,68px); margin:0 0 14px; letter-spacing:-0.01em;">Pictures from the Field</h2>
+        <p style="font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:300; font-size:clamp(18px,2vw,24px); line-height:1.5; color:#6e6048; max-width:60ch; margin:0 0 clamp(24px,3vw,34px);">Every photograph below is reproduced from the original album, with its caption typed exactly as it appeared on the facing page.</p>
       </div>
 
-      <!-- GROUP 1: The Journey 1959 -->
-      <div class="reveal" style="margin-bottom:clamp(48px,7vw,80px);">
-        <div style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:#8a4636; margin-bottom:24px; padding-bottom:10px; border-bottom:1px solid #d8c8a6;">The Journey &mdash; 1959</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:clamp(18px,3vw,36px);">
+      <nav class="album-index reveal" aria-label="Jump to a chapter of the album">
+        <a href="#ch1">The Journey &mdash; 1959</a>
+        <a href="#ch2">Settling in Kapit</a>
+        <a href="#ch3">The Theological School, Sibu</a>
+        <a href="#ch4">Ministry on the Rivers</a>
+        <a href="#ch5">Christ Hospital, Kapit</a>
+        <a href="#ch6">Iban Faith &amp; Worship</a>
+        <a href="#ch7">Their Iban Neighbours</a>
+      </nav>
 
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-1.2deg);">
-            <img src="photos/singapore-arrival-1959.jpg" alt="The Joseph family disembarking at Singapore, 1959" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;The Joseph family disembarking at Singapore on their way to Borneo.&rdquo;</figcaption>
-          </figure>
+      <div class="frontispiece">
+        <figure class="reveal" style="margin:0;">
+          <div class="plate-photo"><img src="photos/booklet-cover.jpg" alt="Cover of the booklet Methodists in South East Asia" class="gallery-img" loading="lazy"></div>
+          <figcaption class="plate-caption" style="margin-top:14px;">
+            <div class="plate-label">The album</div>
+            <div class="plate-typed">&ldquo;Methodists in South East Asia&rdquo; &mdash; the illustrated report from which these photographs and their captions are taken. Published by The Methodist Church, 5 Mount Sophia, Singapore, c.&thinsp;1959&ndash;1961.</div>
+          </figcaption>
+        </figure>
+        <figure class="reveal" style="margin:0;">
+          <div class="plate-photo"><img src="photos/map-southeast-asia.jpg" alt="Map of Southeast Asia showing the mission field" class="gallery-img" loading="lazy"></div>
+          <figcaption class="plate-caption" style="margin-top:14px;">
+            <div class="plate-label">The region</div>
+            <div class="plate-typed">The mission field: from Singapore, across the South China Sea, to Sarawak on the island of Borneo &mdash; and up the Rajang into the interior.</div>
+          </figcaption>
+        </figure>
+      </div>
 
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(0.9deg);">
-            <img src="photos/singapore-arrival-alt.jpg" alt="Alternate gangway shot, Singapore, 1959" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">Alternate photograph &mdash; the same arrival moment, 1959.</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-0.5deg);">
-            <img src="photos/singapore-baggage-1959.jpg" alt="Friends helping the Josephs with baggage at Singapore" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Friends help the Josephs get their baggage off the ship.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(1.3deg);">
-            <img src="photos/joseph-family-singapore-2.jpg" alt="The Joseph family in a garden in Singapore, 1959" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Our first missionary pastor and family from India.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-0.8deg);">
-            <img src="photos/mission-building-sarawak.jpg" alt="A two-storey mission building in Sarawak" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">A mission building in Sarawak, early in the Josephs&rsquo; time.</figcaption>
-          </figure>
-
+      <div class="chapter" id="ch1">
+        <div class="chapter-head reveal">
+          <div class="chapter-num">Chapter I</div>
+          <h3 class="chapter-title">The Journey &mdash; 1959</h3>
+          <p class="chapter-lede">From a Singapore gangway to the far rivers of Borneo &mdash; the family arrives.</p>
         </div>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/singapore-arrival-1959.jpg" alt="The Joseph family disembarking at Singapore, 1959" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Singapore &middot; 1959</div>
+          <div class="plate-typed">&ldquo;The Joseph family disembarking at Singapore on their way to Borneo. They were met by Methodist Missionary friends.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/singapore-arrival-alt.jpg" alt="The Joseph family at the head of the gangway, Singapore, 1959" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Singapore &middot; 1959</div>
+          <div class="plate-typed">An alternate photograph of the same arrival &mdash; Rev. Joseph, his wife, and their son Samuel at the head of the gangway.</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/singapore-baggage-1959.jpg" alt="Friends helping the Josephs with their baggage at Singapore" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Singapore &middot; 1959</div>
+          <div class="plate-typed">&ldquo;Friends help the Josephs get their baggage off the ship at Singapore, enroute to Borneo. Pastor Joseph returns for a last check of the cabin.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/joseph-family-singapore-2.jpg" alt="The Joseph family in Singapore, 1959" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Singapore &middot; 1959</div>
+          <div class="plate-typed">&ldquo;A significant event took place in the coming of the Josephs to Borneo &mdash; our first missionary pastor and family from India.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/mission-building-sarawak.jpg" alt="A two-storey mission building in Sarawak" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sarawak</div>
+          <div class="plate-typed">A mission building in Sarawak, photographed early in the Josephs&rsquo; years on the Rajang.</div>
+        </figcaption>
+      </figure>
       </div>
-
-      <!-- GROUP 2: Settling in Kapit -->
-      <div class="reveal" style="margin-bottom:clamp(48px,7vw,80px);">
-        <div style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:#8a4636; margin-bottom:24px; padding-bottom:10px; border-bottom:1px solid #d8c8a6;">Settling in Kapit</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:clamp(18px,3vw,36px);">
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-1.1deg);">
-            <img src="photos/language-study-kapit.jpg" alt="Rev. and Mrs. Joseph studying Iban at a desk in Kapit" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;The Josephs tackling the language with good will.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(0.7deg);">
-            <img src="photos/josephs-tea-party.jpg" alt="The Josephs hosting Dr. and Mrs. Ding Lih Riu at tea on a veranda" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;The Josephs entertain Dr. and Mrs. Ding Lih Riu at tea.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-0.4deg);">
-            <img src="photos/kapit-bungalow.jpg" alt="Rev. Joseph with Mrs. Betty Moore and Lilic Lee outside the Kapit bungalow" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Right by their bungalow in Kapit, Mr. Joseph meets Mrs. Betty Moore.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(1.4deg);">
-            <img src="photos/iban-welcome.jpg" alt="Iban friends welcoming the Josephs to Sarawak" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Dyak friends make it a grand occasion in welcoming the Josephs.&rdquo;</figcaption>
-          </figure>
-
+      <div class="chapter" id="ch2">
+        <div class="chapter-head reveal">
+          <div class="chapter-num">Chapter II</div>
+          <h3 class="chapter-title">Settling in Kapit</h3>
+          <p class="chapter-lede">Learning the language, meeting the mission, and finding a home on the river.</p>
         </div>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/language-study-kapit.jpg" alt="Rev. and Mrs. Joseph studying the Iban language at Kapit" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Kapit</div>
+          <div class="plate-typed">&ldquo;The Josephs tackling the language with good will. Soon they will be at work in the Theological School. Mrs. Joseph is to teach the health subjects in the school &mdash; a very important part to the students and future pastors to their primitive peoples.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/josephs-tea-party.jpg" alt="The Josephs hosting Dr. and Mrs. Ding Lih Riu at tea" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Kapit</div>
+          <div class="plate-typed">&ldquo;The Josephs entertain Dr. and Mrs. Ding Lih Riu and Lilic Lee at tea. Dr. Ding and his wife are both doctors, recent graduates of Johns Hopkins. Dr. Ding is a Sarawak boy whose father lost his head to a raiding party of Dyaks some years ago. His wife is an American Chinese.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/kapit-bungalow.jpg" alt="Rev. Joseph with Mrs. Betty Moore and Lilic Lee outside the Kapit bungalow" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Kapit</div>
+          <div class="plate-typed">&ldquo;Right by their bungalow in Kapit, Mr. Joseph meets Mrs. Betty Moore, missionary from Tennessee, and Lilic Lee, missionary from the Methodist Church in Malaya and hostel mother to the Dyak students of the Kapit Methodist School.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/iban-welcome.jpg" alt="Iban friends welcoming the Josephs to Sarawak" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sarawak</div>
+          <div class="plate-typed">&ldquo;Dyak friends make it a grand occasion in welcoming the Josephs to Sarawak. Young man on left is a student in the Theological School.&rdquo;</div>
+        </figcaption>
+      </figure>
       </div>
-
-      <!-- GROUP 3: The Theological School, Sibu -->
-      <div class="reveal" style="margin-bottom:clamp(48px,7vw,80px);">
-        <div style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:#8a4636; margin-bottom:24px; padding-bottom:10px; border-bottom:1px solid #d8c8a6;">The Theological School, Sibu</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:clamp(18px,3vw,36px);">
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-0.9deg);">
-            <img src="photos/mts-sibu-building.jpg" alt="The Methodist Theological School building in Sibu" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Methodist Theological School where the Josephs are preparing to work.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(1.1deg);">
-            <img src="photos/dr-ivy-chou.jpg" alt="Dr. Ivy Chou, Principal of the Methodist Theological School, Sibu" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Dr. Ivy Chou, Principal of the Theological School.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-1.5deg);">
-            <img src="photos/joshua-bunsu.jpg" alt="Joshua Bunsu, first Iban graduate, bidding farewell to Dr. Ivy Chou" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Joshua Bunsu, the first Dyak to graduate from the school.&rdquo;</figcaption>
-          </figure>
-
+      <div class="chapter" id="ch3">
+        <div class="chapter-head reveal">
+          <div class="chapter-num">Chapter III</div>
+          <h3 class="chapter-title">The Theological School, Sibu</h3>
+          <p class="chapter-lede">Where Sarawak&rsquo;s own pastors were formed &mdash; and where he would one day be Principal.</p>
         </div>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/mts-sibu-building.jpg" alt="The Methodist Theological School building in Sibu" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sibu</div>
+          <div class="plate-typed">&ldquo;Methodist Theological School where the Josephs are preparing to work. This school, begun in January 1953, used a haunted house until this building was dedicated in 1956. This has classrooms, library, chapel, dining hall and kitchen.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/dr-ivy-chou.jpg" alt="Dr. Ivy Chou, Principal of the Methodist Theological School" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sibu</div>
+          <div class="plate-typed">&ldquo;Dr. Ivy Chou, Principal of the Theological School. While Principal of Hwa Nan High School, China, she was purged by the Communists as being so upstanding and fine they could not use her for their manipulations. She came to Borneo, and in 1953&ndash;55 received her PhD at Union Theological Seminary. She is a consecrated and capable leader.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/joshua-bunsu.jpg" alt="Joshua Bunsu, first Iban graduate, with Dr. Ivy Chou" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sibu</div>
+          <div class="plate-typed">&ldquo;Joshua Bunsu, having finished his course in the Methodist Theological School, faces forward into his field of labor. He bids farewell to his principal, Dr. Ivy Chou. Joshua is the first Dyak to graduate from the school. Now 12 and more Dyak boys are studying in the school.&rdquo;</div>
+        </figcaption>
+      </figure>
       </div>
-
-      <!-- GROUP 4: Ministry on the Rivers -->
-      <div class="reveal" style="margin-bottom:clamp(48px,7vw,80px);">
-        <div style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:#8a4636; margin-bottom:24px; padding-bottom:10px; border-bottom:1px solid #d8c8a6;">Ministry on the Rivers</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:clamp(18px,3vw,36px);">
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(0.6deg);">
-            <img src="photos/river-transport.jpg" alt="Mission boat on a jungle river, Borneo" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Transportation in Borneo is almost entirely by boat.&rdquo;</figcaption>
-          </figure>
-
+      <div class="chapter" id="ch4">
+        <div class="chapter-head reveal">
+          <div class="chapter-num">Chapter IV</div>
+          <h3 class="chapter-title">Ministry on the Rivers</h3>
+          <p class="chapter-lede">The parish was measured in river hours; the boat was the only road.</p>
         </div>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/river-transport.jpg" alt="A mission boat on a jungle river in Borneo" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">The Rajang</div>
+          <div class="plate-typed">&ldquo;Transportation in Borneo is almost entirely by boat along numerous streams and by walking dangerous, difficult jungle trails. Joshua, the first Dyak preacher to finish his training, has a 7-point circuit &mdash; all points reached only by this boat. The Josephs travel this way out among the parishes of the pastors they are teaching.&rdquo;</div>
+        </figcaption>
+      </figure>
       </div>
-
-      <!-- GROUP 5: Christ Hospital, Kapit -->
-      <div class="reveal" style="margin-bottom:clamp(48px,7vw,80px);">
-        <div style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:#8a4636; margin-bottom:24px; padding-bottom:10px; border-bottom:1px solid #d8c8a6;">Christ Hospital, Kapit</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:clamp(18px,3vw,36px);">
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-0.7deg);">
-            <img src="photos/pearl-lee-nursing.jpg" alt="A nurse caring for an elderly Iban patient at Christ Hospital, Kapit" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;They recognize the ministry of Christ Hospital as the merciful arm of God.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(1.2deg);">
-            <img src="photos/pearl-lee-patient.jpg" alt="Pearl Lee, Superintendent of Nurses, talking with an Iban patient" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Here Pearl Lee talks with a patient.&rdquo;</figcaption>
-          </figure>
-
+      <div class="chapter" id="ch5">
+        <div class="chapter-head reveal">
+          <div class="chapter-num">Chapter V</div>
+          <h3 class="chapter-title">Christ Hospital, Kapit</h3>
+          <p class="chapter-lede">Medicine as ministry &mdash; the merciful arm of God among the longhouses.</p>
         </div>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/pearl-lee-nursing.jpg" alt="A nurse caring for an elderly Iban patient at Christ Hospital" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Kapit</div>
+          <div class="plate-typed">&ldquo;Endemic goitre is common in Sarawak. They recognize the ministry of Christ Hospital as being the merciful arm of God reached out to them.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/pearl-lee-patient.jpg" alt="Pearl Lee, Superintendent of Nurses, with an Iban patient" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Kapit</div>
+          <div class="plate-typed">&ldquo;While studying the language, the Josephs are living in Kapit, adjacent to Christ Hospital. They go there to cheer the patients and practise their language. Here Pearl Lee talks with a patient. Miss Lee is Superintendent of Nurses &mdash; herself a Methodist preacher&rsquo;s daughter from China who was purged by the Communists and found her way to Sarawak to help these people.&rdquo;</div>
+        </figcaption>
+      </figure>
       </div>
-
-      <!-- GROUP 6: Iban Faith & Worship -->
-      <div class="reveal" style="margin-bottom:clamp(48px,7vw,80px);">
-        <div style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:#8a4636; margin-bottom:24px; padding-bottom:10px; border-bottom:1px solid #d8c8a6;">Iban Faith &amp; Worship</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:clamp(18px,3vw,36px);">
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-1.0deg);">
-            <img src="photos/chief-resa-worship.jpg" alt="Chief Resa and young Iban men in a longhouse worship service" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Chief Resa and his young men listen to the Word of God.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(0.8deg);">
-            <img src="photos/kumpang.jpg" alt="Kumpang, brother of the Paramount Chieftain, a Christian leader" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Kumpang, brother of the Paramount Chieftain, is a Christian leader.&rdquo;</figcaption>
-          </figure>
-
+      <div class="chapter" id="ch6">
+        <div class="chapter-head reveal">
+          <div class="chapter-num">Chapter VI</div>
+          <h3 class="chapter-title">Iban Faith &amp; Worship</h3>
+          <p class="chapter-lede">A church being born among the Iban &mdash; chiefs, hymnals, and new believers.</p>
         </div>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/chief-resa-worship.jpg" alt="Chief Resa and young Iban men in a longhouse worship service" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">A longhouse</div>
+          <div class="plate-typed">&ldquo;Chief Resa and his young men listen to the Word of God in worship service. (Two blind men are seated in the shadows.) The hymnal &mdash; mimeographed sheets in a binder &mdash; lies on the floor. Another holds a Dyak Testament. The chief does not read, but has memorised hymns and scriptures. 90,000 Dyaks live in the &lsquo;Methodist area&rsquo; of Borneo and about 5,000 have become Christian &mdash; all in the last 10 years. The Josephs are at work on this very problem.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/kumpang.jpg" alt="Kumpang, brother of the Paramount Chieftain, a Christian leader" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sarawak</div>
+          <div class="plate-typed">&ldquo;Kumpang, brother of the Paramount Chieftain, is a Christian leader. During the last war he guided the Australian Armed Forces through the jungle in their campaign against the Japanese. He is a friend of the Josephs.&rdquo;</div>
+        </figcaption>
+      </figure>
       </div>
-
-      <!-- GROUP 7: Their Iban Neighbours -->
-      <div class="reveal" style="margin-bottom:clamp(48px,7vw,80px);">
-        <div style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:#8a4636; margin-bottom:24px; padding-bottom:10px; border-bottom:1px solid #d8c8a6;">Their Iban Neighbours</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:clamp(18px,3vw,36px);">
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-0.6deg);">
-            <img src="photos/iban-rice-pounding.jpg" alt="Two Iban women pounding rice in a large mortar in a longhouse" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;The thumping rhythm of pounding rice.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(1.0deg);">
-            <img src="photos/dapong-cooking.jpg" alt="Dapong, an Iban housewife, cooking over a clay platform on the longhouse floor" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Dapong, a Dyak housewife, stirs her pot of rice.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-1.4deg);">
-            <img src="photos/young-men-rambutans.jpg" alt="Two young Iban men eating rambutans and discussing the Christian faith" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Two young men enjoy rambutans and discuss the Jesus Religion.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(0.5deg);">
-            <img src="photos/banau-hunters.jpg" alt="Sub-chieftain Banau listening to two hunters report on wild boar" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Sub-chieftain Banau hears two skillful hunters report on wild boar.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-0.9deg);">
-            <img src="photos/elderly-woman-weaving.jpg" alt="An elderly Iban woman weaving a mat" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Life is hard and people grow old early. Even the old must work.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(1.3deg);">
-            <img src="photos/adit-longknife.jpg" alt="Adit sharpening his longknife; traditional tattoos including an airplane design" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Adit sharpens his longknife. A few years ago it was used for removing heads.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-0.4deg);">
-            <img src="photos/chief-sibat.jpg" alt="Chief Sibat mending a fishing net; one of the first Iban Christians" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Chief Sibat makes sure his net is mended. He was one of the first Dyaks to become Christian.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(0.9deg);">
-            <img src="photos/fisherman-casting-net.jpg" alt="An Iban fisherman casting a hand net from a dugout canoe on the river" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;Balancing on the bow of a tipsy dugout canoe and casting the net.&rdquo;</figcaption>
-          </figure>
-
-          <figure style="margin:0; background:#fbf6ec; padding:11px 11px 44px; box-shadow:0 12px 28px -14px rgba(43,37,28,0.5); border:1px solid #e2d4b8; transform:rotate(-1.1deg);">
-            <img src="photos/old-warrior-christian.jpg" alt="An old Iban warrior now a Christian, in formal dress with boar tusks and longknife" class="gallery-img" style="display:block; width:100%; height:260px; object-fit:cover; filter:saturate(0.96) contrast(1.02);">
-            <figcaption style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:15px; color:#5a4d38; text-align:center; margin-top:12px; line-height:1.4;">&ldquo;This old warrior who has lived to walk away from many a battle is now a Christian.&rdquo;</figcaption>
-          </figure>
-
+      <div class="chapter" id="ch7">
+        <div class="chapter-head reveal">
+          <div class="chapter-num">Chapter VII</div>
+          <h3 class="chapter-title">Their Iban Neighbours</h3>
+          <p class="chapter-lede">The people he came to serve &mdash; at work, at rest, and at the hearth.</p>
         </div>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/iban-rice-pounding.jpg" alt="Two Iban women pounding rice in a longhouse" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">A longhouse</div>
+          <div class="plate-typed">&ldquo;The thumping rhythm of pounding rice can be heard many times a day in a Dyak longhouse.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/dapong-cooking.jpg" alt="Dapong, an Iban housewife, cooking over the longhouse hearth" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">A longhouse</div>
+          <div class="plate-typed">&ldquo;Dapong, a Dyak housewife, stirs her pot of rice. The vegetables are already cooked in the covered pot. Cooking is done over a platform of clay on the floor using wood from the jungle. Running water is in the river. Food has been thus prepared for centuries.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/young-men-rambutans.jpg" alt="Two young Iban men eating rambutans" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sarawak</div>
+          <div class="plate-typed">&ldquo;Two young men enjoy rambutans (wild fruit) and discuss the merits of this new Jesus Religion. Both have the stylised tattoo and wear the loin-cloth. They are a virile and vigorous people with keen native intelligence.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/banau-hunters.jpg" alt="Sub-chieftain Banau hearing two hunters report on wild boar" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sarawak</div>
+          <div class="plate-typed">&ldquo;Sub-chieftain Banau, on the right, hears two skillful hunters give a report on wild boar that are raiding rice fields. These two with their trusted dogs are adept hunters. Their friends laughingly say the hunter on the left is wilder than the wild boar he hunts.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/elderly-woman-weaving.jpg" alt="An elderly Iban woman weaving a mat" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">A longhouse</div>
+          <div class="plate-typed">&ldquo;Life is hard and people grow old early. Even the old must work. Here an old lady in her black sarong weaves a mat. Mats are used for drying rice, sitting on, sleeping on, having their meals on, and barter for rice &mdash; for seldom does the rice last till the next harvest.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/adit-longknife.jpg" alt="Adit sharpening his longknife" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sarawak</div>
+          <div class="plate-typed">&ldquo;Adit sharpens his longknife. A few years ago it was used for removing heads. Note the airplane design in his tattoo. He has been to Malaya as tracker and guide in jungle operations against Communist guerillas.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/chief-sibat.jpg" alt="Chief Sibat mending a fishing net" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sarawak</div>
+          <div class="plate-typed">&ldquo;Chief Sibat makes sure his net is mended and strong, just in case he entangles a big fish. He was one of the first Dyaks to become Christian, in 1949. He is a good friend of the Josephs.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/fisherman-casting-net.jpg" alt="An Iban fisherman casting a hand net from a dugout canoe" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">The river</div>
+          <div class="plate-typed">&ldquo;Balancing oneself on the bow of a tipsy dugout canoe and casting the hand net really calls for skill. Interestingly enough, one large and several small fish were caught in the taking of these pictures. Fish are a welcome part of their inadequate diet.&rdquo;</div>
+        </figcaption>
+      </figure>
+      <figure class="plate reveal">
+        <div class="plate-photo"><img src="photos/old-warrior-christian.jpg" alt="An old Iban warrior, now a Christian, in formal dress" class="gallery-img" loading="lazy"></div>
+        <figcaption class="plate-caption">
+          <div class="plate-label">Sarawak</div>
+          <div class="plate-typed">&ldquo;This old warrior who has lived to walk away from many a battle is now a Christian. Wild boar tusks hang from his loin cloth along with his trusted all-purpose longknife. A few years ago the knife was used to take heads. He is proud of his red turban and jacket with sleeves. This type of loin-cloth is his formal dress.&rdquo;</div>
+        </figcaption>
+      </figure>
       </div>
 
-      <div class="reveal" style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.1em; color:#9a8b6e; line-height:1.8; padding-top:24px; border-top:1px solid #d8c8a6;">
+      <div class="reveal" style="font-family:'Courier Prime', monospace; font-size:11px; letter-spacing:0.1em; color:#9a8b6e; line-height:1.8; padding-top:24px; margin-top:clamp(40px,6vw,72px); border-top:1px solid #d8c8a6;">
         Source: <em>Methodists in South East Asia</em> &mdash; illustrated report, The Methodist Church, 5 Mount Sophia, Singapore, c.&thinsp;1959&ndash;1961. Original document held by the Joseph family. All captions reproduced verbatim from the original typed pages.
       </div>
 

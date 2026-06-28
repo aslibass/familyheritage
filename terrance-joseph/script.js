@@ -97,8 +97,9 @@ document.querySelectorAll('.gallery-img').forEach(img => {
 
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
-    const captionEl = img.closest('.gallery-item')?.querySelector('.gallery-caption');
-    lightboxCaption.textContent = captionEl ? captionEl.textContent : '';
+    const fig = img.closest('figure');
+    const captionEl = fig ? fig.querySelector('.plate-typed, figcaption') : null;
+    lightboxCaption.textContent = captionEl ? captionEl.textContent.trim() : (img.alt || '');
     lightbox.classList.add('active');
     document.body.classList.add('lightbox-open');
   });
