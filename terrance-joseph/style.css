@@ -455,10 +455,9 @@ nav {
 
 .gallery-img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
   display: block;
   transition: transform 0.3s;
+  cursor: zoom-in;
 }
 
 .gallery-img:hover { transform: scale(1.03); }
@@ -679,6 +678,8 @@ body.lightbox-open { overflow: hidden; }
   width: 100%;
   display: block;
   cursor: zoom-in;
+  aspect-ratio: unset;
+  object-fit: unset;
 }
 
 .portrait-hero-caption {
@@ -708,8 +709,8 @@ body.lightbox-open { overflow: hidden; }
 
 .album-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.75rem 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 2.5rem 2rem;
 }
 
 .album-item {
@@ -721,6 +722,21 @@ body.lightbox-open { overflow: hidden; }
   border-radius: 2px;
   background: hsl(40, 20%, 92%);  /* aged paper tone — Albers: context shifts the photo */
   margin-bottom: 0.75rem;
+  position: relative;
+}
+
+/* Rotation fix for photos scanned sideways (camera turned 90°) */
+.album-img-wrap.rotated {
+  aspect-ratio: 3/4;
+}
+.album-img-wrap.rotated img {
+  position: absolute;
+  width: 133%;
+  height: 75%;
+  top: 12.5%;
+  left: -16.67%;
+  transform: rotate(-90deg);
+  object-fit: cover;
 }
 
 /* Captions */
