@@ -2,10 +2,131 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=kc-cherian/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Family Heritage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: hsl(60, 5%, 96%);
+      --deep: hsl(210, 40%, 10%);
+      --blue: hsl(207, 100%, 28%);
+      --ink: hsl(0, 0%, 12%);
+      --muted: hsl(0, 0%, 42%);
+      --border: hsl(60, 5%, 88%);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 4rem 2rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--deep);
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 3rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      align-items: flex-start;
+    }
+    .person-card {
+      flex: 1;
+      min-width: 260px;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 2rem;
+      text-decoration: none;
+      color: var(--ink);
+      display: block;
+      transition: box-shadow 0.2s ease;
+    }
+    .person-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+    .person-card .generation {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .person-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      color: var(--deep);
+    }
+    .person-card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .person-card .status {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .person-card.coming-soon { opacity: 0.65; pointer-events: none; }
+    .person-card.coming-soon .status { color: var(--muted); }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
 </head>
 <body>
-  <script>window.location.replace('kc-cherian/');</script>
+  <header>
+    <h1>Family Heritage</h1>
+    <p>Preserving the stories of those who came before</p>
+  </header>
+
+  <main>
+    <a href="kc-cherian/" class="person-card">
+      <div class="generation">Maternal · Great-Grandfather</div>
+      <h2>Pastor K.C. Cherian</h2>
+      <p>Co-founder of the Indian Pentecostal Church of God. Born Mezhuveli, Kerala. Died 26 May 1954. Preached across India and Scandinavia.</p>
+      <span class="status">View memorial →</span>
+    </a>
+
+    <a href="terrance-joseph/" class="person-card coming-soon">
+      <div class="generation">Paternal · Grandfather</div>
+      <h2>Terrance Joseph</h2>
+      <p>His story is being gathered from family memories and records.</p>
+      <span class="status">Coming soon</span>
+    </a>
+  </main>
+
+  <footer>
+    <p>A living record — updated as family shares their memories · <a href="mailto:viren.joseph@gmail.com" style="color:inherit">viren.joseph@gmail.com</a></p>
+  </footer>
 </body>
 </html>
