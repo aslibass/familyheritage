@@ -415,8 +415,19 @@ nav {
 
 /* === GALLERY === */
 .gallery {
-  background: var(--card);
+  background: hsl(10, 20%, 94%);   /* base: pale rose matching the cover paper */
   padding: clamp(4rem, 8vw, 7rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('photos/booklet-cover.jpg') center / cover no-repeat;
+  opacity: 0.10;
+  pointer-events: none;
 }
 
 .gallery .chapter-rule { margin-bottom: 1rem; }
