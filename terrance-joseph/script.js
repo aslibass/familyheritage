@@ -1,14 +1,44 @@
-// Scroll Reveal
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
+// Scroll Reveal — reveals elements as they enter the viewport.
+// Built to fail safe: content is only ever hidden by CSS gated on the `.js`
+// class (added in <head>), and this script guarantees a reveal pass on load,
+// so a section can never stay permanently invisible.
+(function () {
+  const reveals = Array.from(document.querySelectorAll('.reveal'));
+  if (!reveals.length) return;
 
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  const revealAll = () => reveals.forEach(el => el.classList.add('is-visible'));
+
+  // Reveal anything currently in (or near) the viewport.
+  const revealInView = () => {
+    const trigger = window.innerHeight - 40;
+    for (let i = reveals.length - 1; i >= 0; i--) {
+      const el = reveals[i];
+      if (el.classList.contains('is-visible')) continue;
+      const rect = el.getBoundingClientRect();
+      if (rect.top < trigger && rect.bottom > 0) {
+        el.classList.add('is-visible');
+      }
+    }
+  };
+
+  // Initial pass for content already on screen.
+  revealInView();
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { revealInView(); ticking = false; });
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  window.addEventListener('load', revealInView);
+
+  // Final safety net: if anything is still hidden a moment after load
+  // (e.g. layout shifts from late-loading fonts/images), reveal it.
+  window.addEventListener('load', () => setTimeout(revealAll, 1200));
+})();
 
 // Active Nav Link
 const sections = document.querySelectorAll('section[id]');
