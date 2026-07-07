@@ -135,6 +135,7 @@ nav a.active {
 }
 
 section.hero {
+  position: relative;
   background: var(--deep);
   color: white;
   min-height: 100svh;
@@ -509,7 +510,7 @@ section.stories {
 
 .story-card {
   background: var(--card);
-  border: 1px solid var(--border);
+  box-shadow: inset 3px 0 0 var(--aged);
   padding: 2rem;
 }
 
@@ -532,8 +533,8 @@ section.stories {
   color: var(--muted);
 }
 
-section.share {
-  background: var(--bg);
+section.share-section {
+  background: var(--card);
   padding: 6rem 0;
 }
 
@@ -780,7 +781,7 @@ body.lightbox-open {
   section.sweden-section,
   section.gallery,
   section.stories,
-  section.share {
+  section.share-section {
     padding: 4rem 0;
   }
 
